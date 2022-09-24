@@ -3,11 +3,13 @@ kind: Service
 metadata:
   name: radarr
 spec:
+  type: NodePort
   ports:
   - port: 7878
     protocol: TCP
     targetPort: 7878
     name: webui
+    nodePort: 30006
   selector:
     run: radarr
 ---
@@ -34,7 +36,7 @@ spec:
       initContainers:
       - name: chown
         image: busybox
-        command: ["sh", "-c", "chown -R 1000:1000 /config && chown -R 1000:1000 /movies"]
+        command: ["sh", "-c", "chown -R 1000:1000 /config && chown -R 1000:1000 /movies && chown -R 1000:1000 /downloads"]
         volumeMounts:
         - mountPath: /config 
           name: htpc-home
@@ -42,6 +44,9 @@ spec:
         - mountPath: /movies 
           name: htpc-home
           subPath: media/movies      
+        - mountPath: /downloads
+          name: htpc-home
+          subPath: downloads
       - name: config
         image: busybox
         command: ["sh", "-c"]

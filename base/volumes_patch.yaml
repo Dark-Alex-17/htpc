@@ -7,7 +7,7 @@ spec:
     spec:
       volumes: 
       - hostPath: 
-          path: /opt/htpc 
+          path: /nfs/htpc 
           type: DirectoryOrCreate 
         name: htpc-home
 ---
@@ -20,7 +20,7 @@ spec:
     spec:
       volumes: 
       - hostPath: 
-          path: /opt/htpc 
+          path: /nfs/htpc 
           type: DirectoryOrCreate 
         name: htpc-home
 ---
@@ -33,7 +33,7 @@ spec:
     spec:
       volumes: 
       - hostPath: 
-          path: /opt/htpc 
+          path: /nfs/htpc 
           type: DirectoryOrCreate 
         name: htpc-home
 ---
@@ -46,7 +46,7 @@ spec:
     spec:
       volumes: 
       - hostPath: 
-          path: /opt/htpc 
+          path: /nfs/htpc 
           type: DirectoryOrCreate 
         name: htpc-home
 ---
@@ -59,7 +59,7 @@ spec:
     spec:
       volumes: 
       - hostPath: 
-          path: /opt/htpc 
+          path: /nfs/htpc 
           type: DirectoryOrCreate 
         name: htpc-home
 ---
@@ -72,24 +72,11 @@ spec:
     spec:
       volumes: 
       - hostPath: 
-          path: /opt/htpc 
+          path: /nfs/htpc 
           type: DirectoryOrCreate 
         name: htpc-home
         # persistentVolumeClaim:
         #   claimName: local-path-pvc
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: plex
-spec:
-  template:
-    spec:
-      volumes: 
-      - hostPath: 
-          path: /opt/htpc 
-          type: DirectoryOrCreate 
-        name: htpc-home
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -100,7 +87,7 @@ spec:
     spec:
       volumes: 
       - hostPath: 
-          path: /opt/htpc 
+          path: /nfs/htpc 
           type: DirectoryOrCreate 
         name: htpc-home
 ---

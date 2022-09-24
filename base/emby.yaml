@@ -3,11 +3,13 @@ kind: Service
 metadata:
   name: emby
 spec:
+  type: NodePort
   ports:
   - port: 8096
     protocol: TCP
     targetPort: 8096
     name: webui
+    nodePort: 30002
   selector:
     run: emby
 ---

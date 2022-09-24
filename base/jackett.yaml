@@ -3,11 +3,13 @@ kind: Service
 metadata:
   name: jackett
 spec:
+  type: NodePort
   ports:
   - port: 9117
     protocol: TCP
     targetPort: 9117
     name: webui
+    nodePort: 30004
   selector:
     run: jackett
 ---

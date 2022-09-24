@@ -14,7 +14,6 @@ resources:
 - bazarr.yaml
 - transmission.yaml
 - emby.yaml
-- plex.yml
 - prowlarr.yml
 - ingress.yaml
 

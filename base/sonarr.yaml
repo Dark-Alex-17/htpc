@@ -3,11 +3,13 @@ kind: Service
 metadata:
   name: sonarr
 spec:
+  type: NodePort
   ports:
   - port: 8989
     protocol: TCP
     targetPort: 8989
     name: webui
+    nodePort: 30001
   selector:
     run: sonarr
 ---
@@ -34,7 +36,7 @@ spec:
       initContainers:
       - name: chown
         image: busybox
-        command: ["sh", "-c", "chown -R 1000:1000 /config && chown -R 1000:1000 /tv"]
+        command: ["sh", "-c", "chown -R 1000:1000 /config && chown -R 1000:1000 /tv && chown -R 1000:1000 /downloads"]
         volumeMounts:
         - mountPath: /config 
           name: htpc-home
@@ -42,6 +44,9 @@ spec:
         - mountPath: /tv 
           name: htpc-home
           subPath: media/tv                
+        - mountPath: /downloads
+          name: htpc-home
+          subPath: downloads
       - name: config
         image: busybox
         command: ["sh", "-c"]

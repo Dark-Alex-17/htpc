@@ -3,11 +3,13 @@ kind: Service
 metadata:
   name: bazarr
 spec:
+  type: NodePort
   ports:
   - port: 6767
     protocol: TCP
     targetPort: 6767
     name: webui
+    nodePort: 30003
   selector:
     run: bazarr
 ---

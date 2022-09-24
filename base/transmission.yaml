@@ -3,11 +3,13 @@ kind: Service
 metadata:
   name: transmission
 spec:
+  type: NodePort
   ports:
   - port: 9091
     protocol: TCP
     targetPort: 9091
     name: webui
+    nodePort: 30007
   selector:
     run: transmission
 ---
@@ -34,7 +36,7 @@ spec:
       initContainers:
       - name: chown
         image: busybox
-        command: ["sh", "-c", "chown -R 1000:1000 /config"]
+        command: ["sh", "-c", "chown -R 1000:1000 /config && chown -R 1000:1000 /downloads"]
         volumeMounts:
         - mountPath: /config 
           name: htpc-home

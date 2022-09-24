@@ -1,64 +1,73 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: htpc
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    ingress.kubernetes.io/protocol: http
+    ingress.kubernetes.io/ssl-redirect: false
 spec:
+  ingressClassName: traefik
   rules:
   - http:
       paths:
       - path: /
-        pathType: Exact
+        pathType: Prefix
         backend:
           service:
             name: emby
             port:
-              number: 8096
+              name: webui
       - path: /jackett
-        pathType: Exact
+        pathType: Prefix
         backend:
           service:
             name: jackett
             port:
-              number: 9117
+              name: webui
       - path: /sonarr
-        pathType: Exact
+        pathType: Prefix
         backend:
           service:
             name: sonarr
             port:
-              number: 8989
+              name: webui
       - path: /radarr
-        pathType: Exact
+        pathType: Prefix
         backend:
           service:
             name: radarr
             port:
-              number: 7878
+              name: webui
       - path: /bazarr
-        pathType: Exact
+        pathType: Prefix
         backend:
           service:
             name: bazarr
             port:
-              number: 6767
+              name: webui
       - path: /transmission
-        pathType: Exact
+        pathType: Prefix
         backend:
           service:
             name: transmission
             port:
-              number: 9091
-      - path: /plex
-        pathType: Exact
-        backend:
-          service:
-            name: plex
-            port:
-              number: 32400
+              name: webui
       - path: /prowlarr
-        pathType: Exact
+        pathType: Prefix
         backend:
           service:
             name: prowlarr
             port:
-              number: 9696
+              name: webui
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: traefik
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "true"
+spec:
+  controller: traefik.io/ingress-controller
+---
