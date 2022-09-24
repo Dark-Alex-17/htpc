@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: plex
+spec:
+  ports:
+  - port: 32400
+    protocol: TCP
+    targetPort: 32400
+    name: webui
+  selector:
+    run: plex
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: plex
+  name: plex
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: plex
+  template:
+    metadata:
+      labels:
+        run: plex
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+      - env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        image: linuxserver/plex
+        name: plex
+        ports:
+        - containerPort: 32400
+          name: webui
+          protocol: TCP
+        - containerPort: 32400
+          name: webui-ssl
+          protocol: TCP
+        volumeMounts: 
+        - mountPath: /config 
+          name: htpc-home
+          subPath: plex
+        - mountPath: /tv 
+          name: htpc-home
+          subPath: media/tv  
+        - mountPath: /movies 
+          name: htpc-home
+          subPath: media/movies     
