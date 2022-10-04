@@ -3,13 +3,11 @@ kind: Service
 metadata:
   name: transmission
 spec:
-  type: NodePort
   ports:
   - port: 9091
     protocol: TCP
     targetPort: 9091
     name: webui
-    nodePort: 30007
   selector:
     run: transmission
 ---
@@ -30,8 +28,6 @@ spec:
         run: transmission
     spec:
       securityContext:
-        # runAsUser: 1000
-        # runAsGroup: 1000
         fsGroup: 1000
       initContainers:
       - name: chown
@@ -47,22 +43,22 @@ spec:
         - mountPath: /watch
           name: htpc-home
           subPath: watch       
-      # - name: setup-transmission
-      #   image: busybox
-      #   securityContext:
-      #     runAsUser: 1000
-      #     runAsGroup: 1000        
-      #   command: 
-      #   - sh
-      #   - -c
-      #   - |
-      #     echo Saving settings.json
-      #     echo '{"download-dir": "/downloads", "rpc-whitelist-enabled": false, "rpc-host-whitelist-enabled": false}' > /config/settings.json;
-      #     echo settings.json successfully saved
-      #   volumeMounts: 
-      #   - mountPath: /config 
-      #     name: htpc-home
-      #     subPath: transmission
+       - name: setup-transmission
+         image: busybox
+         securityContext:
+           runAsUser: 1000
+           runAsGroup: 1000
+         command:
+         - sh
+         - -c
+         - |
+           echo Saving settings.json
+           echo '{"download-dir": "/downloads", "rpc-whitelist-enabled": false, "rpc-host-whitelist-enabled": false}' > /config/settings.json;
+           echo settings.json successfully saved
+         volumeMounts:
+         - mountPath: /config
+           name: htpc-home
+           subPath: transmission
       containers:    
       - name: transmission
         image: linuxserver/transmission

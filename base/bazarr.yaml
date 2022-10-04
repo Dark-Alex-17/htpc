@@ -3,13 +3,11 @@ kind: Service
 metadata:
   name: bazarr
 spec:
-  type: NodePort
   ports:
   - port: 6767
     protocol: TCP
     targetPort: 6767
     name: webui
-    nodePort: 30003
   selector:
     run: bazarr
 ---
@@ -30,8 +28,6 @@ spec:
         run: bazarr
     spec:
       securityContext:
-        # runAsUser: 1000
-        # runAsGroup: 1000
         fsGroup: 1000
       initContainers:
       - name: wait-for-sonarr-and-radarr
@@ -106,18 +102,18 @@ spec:
           value: "1000"
         image: linuxserver/bazarr
         name: bazarr
-        # livenessProbe:
-        #   httpGet:
-        #     path: /bazarr
-        #     port: webui        
-        #   initialDelaySeconds: 200
-        #   periodSeconds: 15
-        # readinessProbe:
-        #   httpGet:
-        #     path: /bazarr
-        #     port: webui        
-        #   initialDelaySeconds: 200
-        #   periodSeconds: 15 
+       livenessProbe:
+         httpGet:
+           path: /bazarr
+           port: webui
+         initialDelaySeconds: 200
+         periodSeconds: 15
+       readinessProbe:
+         httpGet:
+           path: /bazarr
+           port: webui
+         initialDelaySeconds: 200
+         periodSeconds: 15
         ports:
         - containerPort: 6767
           name: webui

@@ -40,20 +40,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jackett
-spec:
-  template:
-    spec:
-      volumes: 
-      - hostPath: 
-          path: /nfs/htpc 
-          type: DirectoryOrCreate 
-        name: htpc-home
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: emby
+  name: plex
 spec:
   template:
     spec:
@@ -75,8 +62,6 @@ spec:
           path: /nfs/htpc 
           type: DirectoryOrCreate 
         name: htpc-home
-        # persistentVolumeClaim:
-        #   claimName: local-path-pvc
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -88,6 +73,6 @@ spec:
       volumes: 
       - hostPath: 
           path: /nfs/htpc 
-          type: DirectoryOrCreate 
+          type: DirectoryOrCreate
         name: htpc-home
 ---

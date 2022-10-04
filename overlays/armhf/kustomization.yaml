@@ -15,8 +15,8 @@ images:
     newTag: arm32v7-latest
   - name: linuxserver/transmission
     newTag: arm32v7-latest
-  - name: emby/embyserver
-    newName: emby/embyserver_arm32v7
+  - name: linuxserver/plex
+    newTag: arm32v7-latest
     newTag: latest
   - name: linuxserver/prowlarr
     newTag: arm32v7-nightly

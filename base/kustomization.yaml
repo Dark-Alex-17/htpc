@@ -8,12 +8,11 @@ commonLabels:
 
 resources:
 - namespace.yaml
-- jackett.yaml
 - radarr.yaml
 - sonarr.yaml
 - bazarr.yaml
 - transmission.yaml
-- emby.yaml
+- plex.yaml
 - prowlarr.yml
 - ingress.yaml
 

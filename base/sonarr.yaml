@@ -3,13 +3,11 @@ kind: Service
 metadata:
   name: sonarr
 spec:
-  type: NodePort
   ports:
   - port: 8989
     protocol: TCP
     targetPort: 8989
     name: webui
-    nodePort: 30001
   selector:
     run: sonarr
 ---
@@ -30,9 +28,7 @@ spec:
         run: sonarr
     spec:
       securityContext:
-        # runAsUser: 1000
-        # runAsGroup: 1000
-        fsGroup: 1000    
+        fsGroup: 1000
       initContainers:
       - name: chown
         image: busybox
@@ -72,22 +68,22 @@ spec:
         ports:
         - containerPort: 8989
           name: webui
-          #        livenessProbe:
-          #          exec:
-          #            command:
-          #            - /bin/sh
-          #            - -c
-          #            - curl "http://localhost:8989/sonarr/api/health?ApiKey=$(sed -ne '/ApiKey/{s/.*<ApiKey>\(.*\)<\/ApiKey>.*/\1/p;q;}' </config/config.xml)"
-          #          initialDelaySeconds: 30
-          #          periodSeconds: 10
-          #        readinessProbe:
-          #          exec:
-          #            command:
-          #            - /bin/sh
-          #            - -c
-          #            - curl "http://localhost:8989/sonarr/api/system/status?ApiKey=$(sed -ne '/ApiKey/{s/.*<ApiKey>\(.*\)<\/ApiKey>.*/\1/p;q;}' </config/config.xml)"
-          #          initialDelaySeconds: 30
-          #          periodSeconds: 10
+          livenessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - curl "http://localhost:8989/sonarr/api/health?ApiKey=$(sed -ne '/ApiKey/{s/.*<ApiKey>\(.*\)<\/ApiKey>.*/\1/p;q;}' </config/config.xml)"
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - curl "http://localhost:8989/sonarr/api/system/status?ApiKey=$(sed -ne '/ApiKey/{s/.*<ApiKey>\(.*\)<\/ApiKey>.*/\1/p;q;}' </config/config.xml)"
+            initialDelaySeconds: 30
+            periodSeconds: 10
         volumeMounts: 
         - mountPath: /config 
           name: htpc-home

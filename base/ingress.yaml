@@ -16,14 +16,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: emby
-            port:
-              name: webui
-      - path: /jackett
-        pathType: Prefix
-        backend:
-          service:
-            name: jackett
+            name: plex
             port:
               name: webui
       - path: /sonarr

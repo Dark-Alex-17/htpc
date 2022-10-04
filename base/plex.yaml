@@ -1,57 +1,53 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: emby
+  name: plex
 spec:
-  type: NodePort
   ports:
-  - port: 8096
+  - port: 32400
     protocol: TCP
-    targetPort: 8096
+    targetPort: 32400
     name: webui
-    nodePort: 30002
   selector:
-    run: emby
+    run: plex
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    run: emby
-  name: emby
+    run: plex
+  name: plex
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: emby
+      run: plex
   template:
     metadata:
       labels:
-        run: emby
+        run: plex
     spec:
       securityContext:
         fsGroup: 1000
       containers:
       - env:
-        - name: TZ
-          value: Pacific/Auckland
-        - name: UID
+        - name: PUID
           value: "1000"
-        - name: GID
+        - name: PGID
           value: "1000"
-        image: emby/embyserver
-        name: emby
+        image: linuxserver/plex
+        name: plex
         ports:
-        - containerPort: 8096
+        - containerPort: 32400
           name: webui
           protocol: TCP
-        - containerPort: 8920
+        - containerPort: 32400
           name: webui-ssl
           protocol: TCP
-        volumeMounts: 
-        - mountPath: /config 
+        volumeMounts:
+        - mountPath: /config
           name: htpc-home
-          subPath: emby
+          subPath: plex
         - mountPath: /tv 
           name: htpc-home
           subPath: media/tv  
