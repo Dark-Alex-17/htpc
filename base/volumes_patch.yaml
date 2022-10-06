@@ -76,3 +76,29 @@ spec:
           type: DirectoryOrCreate
         name: htpc-home
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readarr
+spec:
+  template:
+    spec:
+      volumes:
+      - hostPath:
+          path: /nfs/htpc
+          type: DirectoryOrCreate
+        name: htpc-home
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kavita
+spec:
+  template:
+    spec:
+      volumes:
+      - hostPath:
+          path: /nfs/htpc
+          type: DirectoryOrCreate
+        name: htpc-home
+---

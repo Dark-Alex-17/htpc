@@ -18,5 +18,8 @@ images:
   - name: linuxserver/plex
     newTag: arm32v7-latest
     newTag: latest
+  - name: linuxserver/readarr
+    newTag: arm32v7-nightly
+    newTag: latest
   - name: linuxserver/prowlarr
     newTag: arm32v7-nightly

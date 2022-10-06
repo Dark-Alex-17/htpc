@@ -54,6 +54,20 @@ spec:
             name: prowlarr
             port:
               name: webui
+      - path: /readarr
+        pathType: Prefix
+        backend:
+          service:
+            name: readarr
+            port:
+              name: webui
+      - path: /kavita
+        pathType: Prefix
+        backend:
+          service:
+            name: kavita
+            port:
+              name: webui
 ---
 apiVersion: networking.k8s.io/v1
 kind: IngressClass

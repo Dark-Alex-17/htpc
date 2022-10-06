@@ -64,7 +64,7 @@ spec:
         image: linuxserver/transmission
         env:
         - name: TZ
-          value: Pacific/Auckland
+          value: America/Denver
         - name: PUID
           value: "1000"
         - name: PGID
